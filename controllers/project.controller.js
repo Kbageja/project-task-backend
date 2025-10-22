@@ -1,4 +1,4 @@
-const Project = require('../models/Project');
+const Project = require('../models/project.js');
 const logger = require('../logger');
 
 // Create Project

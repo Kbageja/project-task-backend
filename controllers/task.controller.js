@@ -1,4 +1,4 @@
-const Task = require('../models/Task');
+const Task = require('../models/task.js');
 const logger = require('../logger');
 
 // Add Task

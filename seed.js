@@ -2,9 +2,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('./models/User');
-const Project = require('./models/Project');
-const Task = require('./models/Task');
+const User = require('./models/user.js');
+const Project = require('./models/project.js');
+const Task = require('./models/task.js');
 
 const seedDatabase = async () => {
   try {
