@@ -60,7 +60,7 @@ const updateTask = async (req, res) => {
       });
     }
 
-    const validStatuses = ['pending', 'blocked', 'completed'];
+    const validStatuses = ['pending', 'inprogress', 'completed'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ 
         success: false, 
@@ -110,11 +110,11 @@ const updateTaskAll = async(req,res)=>{
       });
     }
 
-    const validStatuses = ['pending', 'blocked', 'completed'];
+    const validStatuses = ['pending', 'inprogress', 'completed'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Invalid status. Must be: pending, blocked, or completed' 
+        message: 'Invalid status. Must be: pending, inprogress, or completed' 
       });
     }
 
