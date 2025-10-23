@@ -4,8 +4,8 @@ const logger = require('../logger');
 const authMiddleware = (req, res, next) => {
   try {
     const token = req.cookies.token;
-    console.log(token);
-    console.log(req.cookies)
+    console.log(token,"token");
+    console.log(req.cookies,"cookies")
 
     if (!token) {
       return res.status(401).json({ success: false, message: 'No token provided' });

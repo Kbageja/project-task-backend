@@ -5,6 +5,7 @@ const logger = require('../logger');
 const createProject = async (req, res) => {
   try {
     const { name, userId , description } = req.body;
+    console.log("create project")
 
     // Validation
     if (!name || !userId) {
