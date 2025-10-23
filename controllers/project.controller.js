@@ -131,6 +131,54 @@ const updateProject = async (req, res) => {
   }
 }
 
+const updateAll = async(req,res)=>{
+  try {
+     const { projectId, status , name , description } = req.body;
+    console.log(req.body);
+
+    // Validation
+    if (!projectId || !status || !name || !description) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Project ID and status are required' 
+      });
+    }
+
+    const validStatuses = ['active',  'completed'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Invalid status. Must be: active, completed' 
+      });
+    }
+
+    // Update task
+    const project = await Project.findByIdAndUpdate(
+      projectId,
+      { status , name , description },
+      { new: true, runValidators: true }
+    );
+
+    if (!project) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Project not found' 
+      });
+    }
+
+    logger.info(`Project updated: ${projectId}`);
+
+    res.status(200).json({
+      success: true,
+      message: 'Project updated successfully',
+      project
+    });
+    
+  } catch (error) {
+    
+  }
+}
+
 const fetchProjects = async (req, res) => {
   try {
     const { userId } = req.query;
@@ -154,4 +202,4 @@ const fetchProjects = async (req, res) => {
     }
 };
 
-module.exports = { createProject, deleteProject , fetchProjects , updateProject};
+module.exports = { createProject, deleteProject , fetchProjects , updateProject , updateAll};

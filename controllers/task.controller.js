@@ -60,7 +60,7 @@ const updateTask = async (req, res) => {
       });
     }
 
-    const validStatuses = ['pending', 'in-progress', 'completed'];
+    const validStatuses = ['pending', 'blocked', 'completed'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ 
         success: false, 
@@ -97,6 +97,56 @@ const updateTask = async (req, res) => {
     });
   }
 };
+
+const updateTaskAll = async(req,res)=>{
+  try {
+    const { taskId, status , title , description , dueDate  } = req.body;
+
+    // Validation
+    if (!taskId || !status || !title || !description || !dueDate) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'All task fields are required' 
+      });
+    }
+
+    const validStatuses = ['pending', 'blocked', 'completed'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Invalid status. Must be: pending, blocked, or completed' 
+      });
+    }
+
+    // Update task
+    const task = await Task.findByIdAndUpdate(
+      taskId,
+      { status , title , description , dueDate },
+      { new: true, runValidators: true }
+    );
+
+    if (!task) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Task not found' 
+      });
+    }
+
+    logger.info(`Task updated: ${taskId}`);
+
+    res.status(200).json({
+      success: true,
+      message: 'Task updated successfully',
+      task
+    });
+  } catch (error) {
+    logger.error('Update task error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Server error while updating task' 
+    });
+  }
+}
 
 // Delete Task
 const deleteTask = async (req, res) => {
@@ -161,4 +211,4 @@ const fetchTasks=async(req,res)=>{
 }
 };
 
-module.exports = { addTask, updateTask, deleteTask,fetchTasks };
+module.exports = { addTask, updateTask, deleteTask,fetchTasks,updateTaskAll };
