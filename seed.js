@@ -19,11 +19,11 @@ const seedDatabase = async () => {
     console.log('🗑️  Cleared existing data');
 
     // Create User
-    const hashedPassword = await bcrypt.hash('password123', 10);
+    const hashedPassword = await bcrypt.hash('Test@123', 10);
     
     const user = await User.create({
-      name: 'John',
-      email: 'john@example.com',
+      name: 'Test',
+      email: 'test@example.com',
       password: hashedPassword
     });
     console.log(`✅ Created user: ${user.email}`);
