@@ -8,6 +8,8 @@ const { validateEmail, validatePassword } = require('../utils/validation');
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    logger.info(name,email);
+    console.log(name,"name",email,"email")
 
     // Validation
     if (!name || !email || !password) {
